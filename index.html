@@ -1,0 +1,1134 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="DesignProduct.html">
+    <title>Admin Dashboard</title>
+</head>
+
+<style>
+    body {
+
+        margin: 0px;
+    }
+
+    .main {
+
+        display: flex;
+    }
+
+    .leftSideBar {
+
+        background-color: #232D3D;
+        width: 250px;
+        height: 100%;
+        position: fixed;
+    }
+
+    .leftSideBar h2 {
+
+        color: white;
+        margin-left: 10px;
+        padding: 5px;
+        position: relative;
+
+    }
+
+    .rightContainer {
+
+        margin-left: 260px;
+        width: 100%;
+        height: 100vh;
+        display: flex;
+        background-color: rgb(255, 255, 255);
+        border-radius: 5px;
+
+    }
+
+    .sideItem {
+
+
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+
+
+
+    }
+
+    .leftSideBar .sideItem h4 {
+
+        color: white;
+        margin: 10px;
+
+
+    }
+
+    .leftSideBar .sideItem img {
+
+        width: 30px;
+        height: 30px;
+        margin: 10px;
+    }
+
+    .AttributesLeft {
+
+        background-color: #C4C4C4;
+        padding: 10px;
+        margin-top: 6px;
+        margin-left: 2px;
+        margin-right: 2px;
+        width: 320px;
+        height: 94%;
+        border-radius: 6px;
+
+    }
+
+    .AttributesLeft h4 {
+
+        padding-left: 10px;
+        padding-right: 10px;
+        padding-top: 10px;
+        padding-bottom: 10px;
+        background-color: #8E8E8E;
+        color: white;
+        cursor: pointer;
+        margin: 6px;
+        border-radius: 6dp;
+        text-align: center;
+        font-weight: bold;
+
+    }
+
+    .AttributeClick {
+
+        padding-left: 10px;
+        padding-right: 10px;
+        padding-top: 10px;
+        padding-bottom: 10px;
+        background-color: #232D3D;
+        color: white;
+        margin: 6px;
+        border-radius: 6dp;
+        text-align: center;
+        font-weight: bold;
+
+
+    }
+
+    .AttributesRight {
+
+
+        background-color: #C4C4C4;
+        margin: 6px;
+        padding: 5px;
+        height: 95%;
+        width: 630px;
+        border-radius: 6px;
+        display: block;
+
+
+
+    }
+
+    .existingCategories {
+
+        overflow: auto;
+        height: 430px;
+    }
+
+
+
+    .categoryItem {
+
+        display: flex;
+        background-color: white;
+        border-radius: 4px;
+        margin-left: 10px;
+        margin-top: 20px;
+
+    }
+
+    .categoryItem h4 {
+
+        width: 550px;
+        padding-left: 20px;
+        background-color: white;
+
+
+    }
+
+    .categoryItem img {
+
+        width: 20px;
+        height: 20px;
+        align-items: center;
+        margin-top: 20px;
+        margin-left: 10px;
+        cursor: pointer;
+    }
+
+    .addNewCategory {
+
+        background-color: #E0E0E0;
+        display: flex;
+
+
+    }
+
+    .addNewCategory h4 {
+
+        margin: 2px;
+    }
+
+    .addNewCategory div {
+
+
+        margin: 10px;
+    }
+
+    .addNewCategory input {
+
+        width: 400px;
+        padding-top: 5px;
+        padding-bottom: 5px;
+        display: flex;
+    }
+
+    .addNewCategory button {
+
+        background-color: #F49B32;
+        color: white;
+        height: 30px;
+        align-items: center;
+        width: 100px;
+        margin-top: 0%;
+        margin-bottom: 0%;
+        text-decoration: none;
+        box-sizing: border-box;
+    }
+
+    .addNewCategory .addBtn {}
+</style>
+
+
+<body>
+
+    <div class="main">
+
+        <div class="leftSideBar">
+
+            <h2>Kange Collection</h2>
+
+            <div id="AttributesBtn" class="sideItem">
+                <img src="cogwheel.png" alt="">
+                <h4 id="AttributesManager">Attributes Manager</h4>
+            </div>
+
+            <div id="ProductDesignBtn" class="sideItem">
+                <img src="buildproductdark.png" alt="">
+                <h4 id="productDesign">Design Product</h4>
+            </div>
+
+            <div class="sideItem">
+                <img src="pushTostore.png" alt="">
+                <h4 id="pushProduct">Add Product to Store</h4>
+            </div>
+
+        </div>
+
+        <div class="rightContainer">
+
+
+
+        </div>
+
+
+    </div>
+
+
+    </div>
+
+
+    <!-- ... Your HTML ... -->
+
+    <script>
+
+
+
+
+        //product Model
+        const Products = function(category,subcategory,brand,sizes,colors,shortDescription,description,salePrice,discount,designNo,productImages){
+
+
+            this.category = category;
+            this.subcategory = subcategory;
+            this.brand = brand;
+            this.sizes  = sizes;
+            this.colors  = colors;
+            this.shortDescription = shortDescription;
+            this.description = description;
+            this.salePrice = salePrice;
+            this.discount = discount;
+            this.designNo = designNo;
+            this.productImages = productImages;
+
+        }
+
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const rightContainer = document.querySelector('.rightContainer');
+
+
+            //ADD EVENT LISTENER TO PRODUCT DESIGN 
+            const productManager = document.querySelector('#productDesign');
+            productManager.addEventListener('click', () => {
+
+
+
+                fetch('DesignProduct.html')
+                    .then(response => response.text())
+                    .then(html => {
+                        // Use the loaded HTML content
+                        rightContainer.innerHTML = html;
+
+
+                        const selectCategory = document.getElementById('selectCategoryDropdown');
+                        const subcategory = document.getElementById('selectSubCategoryDropdown');
+                        const Brand = document.getElementById('selectBrandDropdown');
+                        const size = document.getElementById('selectSizeDropdown');
+
+
+                        //fetching categories in drop down
+
+                        fetch('http://localhost:5000/api/getAllCategories') // Assuming this is the correct URL
+                            .then(response => response.json())
+                            .then(categories => {
+                                categories.forEach(category => {
+                                    var option = document.createElement('option');
+                                    option.value = category._id;
+                                    option.text = category.categoryName;
+                                    selectCategory.appendChild(option);
+                                });
+                            })
+                            .catch(error => console.error('Error:', error));
+
+                        //fetching subcategories in drop down
+
+                        fetch('http://localhost:5000/api/getAllSubCategories') // Assuming this is the correct URL
+                            .then(response => response.json())
+                            .then(categories => {
+                                categories.forEach(category => {
+                                    var option = document.createElement('option');
+                                    option.value = category._id;
+                                    option.text = category.SubcategoryName;
+                                    subcategory.appendChild(option);
+                                });
+                            })
+                            .catch(error => console.error('Error:', error));
+
+                        //fetching brands in drop down
+
+                        fetch('http://localhost:5000/api/getAllBrands')
+                            .then(response => response.json())
+                            .then(categories => {
+                                categories.forEach(category => {
+                                    var option = document.createElement('option');
+                                    option.value = category._id;
+                                    option.text = category.brandName;
+                                    Brand.appendChild(option);
+                                });
+                            })
+                            .catch(error => console.error('Error:', error));
+
+                        //fetching allsizes in drop down
+
+                        fetch('http://localhost:5000/api/getAllSizes')
+                            .then(response => response.json())
+                            .then(categories => {
+                                categories.forEach(category => {
+                                    var option = document.createElement('option');
+                                    option.value = category._id;
+                                    option.text = category.size;
+                                    size.appendChild(option);
+                                });
+                            })
+                            .catch(error => console.error('Error:', error));
+                    })
+                    .catch(error => console.error('Error:', error));
+
+                //Add size button onclick
+                document.addEventListener('click', () => {
+
+                    if (event.target.id === 'addSizeToListBtn') {
+
+                       const selectElement = document.getElementById('selectSizeDropdown')
+                        const selectedIndex = selectElement.selectedIndex;
+                        const selectedOption = selectElement.options[selectedIndex];
+                        const selectedText = selectedOption.text;
+                    
+                        const sizeBox = document.querySelector('.addedSizes');
+                        const list = sizeBox.querySelector('#sizeList');
+                        const textElement = document.createElement('li');
+                        textElement.innerText = selectedText;
+                        textElement.setAttribute('color','#00000');
+                        list.appendChild(textElement);
+
+
+
+
+                    }
+
+
+
+
+                })
+
+
+
+
+                //set button color 
+                document.querySelector('#ProductDesignBtn').style.background = '#ffff';
+                document.querySelector('#productDesign').style.color = "#151515";
+                //setting other as normal
+                document.querySelector('#AttributesBtn').style.background = '#232D3D';
+                document.querySelector('#AttributesManager').style.color = '#ffff';
+
+
+
+            });
+
+            //    Attributes manager onclick
+            const AttributesManager = document.querySelector('#AttributesManager');
+            AttributesManager.addEventListener('click', () => {
+                rightContainer.innerHTML = '<div class="AttributesLeft"><h4 id="category">Categories</h4><h4 id="subcategory">Subcategories</h4><h4 id="brand">Brands</h4><h4 id="sizes">Sizes</h4></div>';
+
+                document.querySelector('#AttributesBtn').style.background = '#ffff';
+                document.querySelector('#AttributesManager').style.color = '#151515';
+
+                //set other normal
+                document.querySelector('#ProductDesignBtn').style.background = '#232D3D';
+                document.querySelector('#productDesign').style.color = "#ffff";
+
+            });
+
+
+
+
+            // CategoryAddBtn OnClickListener
+            document.addEventListener('click', () => {
+
+                if (event.target.id === 'categoryAddBtn') {
+                    const input = document.querySelector('#AttributeInput');
+                    const url = 'http://localhost:5000/api/createCategory';
+                    const data = {
+                        name: input.value,
+                    };
+
+                    const options = {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(data)
+                    };
+
+                    fetch(url, options)
+                        .then(response => response.json())
+                        .then(data => {
+                            console.log('Success:', data);
+                            document.getElementById('AttributeInput').value = "";
+                            const apiUrl = 'http://localhost:5000/api/getAllCategories';
+                            fetch(apiUrl)
+                                .then(response => response.json())
+                                .then(data => {
+                                    rightContainer.innerHTML = '<div class="AttributesLeft"><h4 id="category">Categories</h4><h4 id="subcategory">Subcategories</h4><h4 id="brand">Brands</h4><h4>Sizes</h4></div>   <div class="AttributesRight"><div class="addNewCategory"><div> <h4>Add new category</h4> <input id ="AttributeInput" type="text"></div><div><button id="addBtn">Add</button>  </div></div><h3>Available Categories</h3><div class="existingCategories"></div>';
+                                    const existingCategories = document.querySelector('.existingCategories');
+                                    data.forEach(category => {
+                                        const categoryItem = document.createElement('div');
+                                        categoryItem.classList.add('categoryItem');
+                                        const categoryName = document.createElement('h4');
+                                        categoryName.innerText = category.categoryName;
+                                        const deleteIcon = document.createElement('img');
+                                        deleteIcon.src = 'dustbin.png';
+                                        deleteIcon.alt = 'Delete';
+                                        deleteIcon.setAttribute('id', category._id);
+                                        deleteIcon.classList.add('dustbinIcon'); // Add dustbinIcon class
+                                        deleteIcon.setAttribute('data-id', category._id); // Set data-id attribute
+                                        categoryItem.appendChild(categoryName);
+                                        categoryItem.appendChild(deleteIcon);
+                                        existingCategories.appendChild(categoryItem);
+                                    });
+                                })
+                                .catch(error => {
+                                    console.error('Error fetching data:', error);
+                                });
+                        })
+                        .catch(error => {
+                            console.error('Error:', error);
+                        });
+                }
+
+
+
+
+
+
+            });
+
+            //subcategoryAddBtn onclicklistner
+
+            document.addEventListener('click', () => {
+
+                if (event.target.id === 'subcategoryAddBtn') {
+                    const input = document.querySelector('#AttributeInput');
+                    const url = 'http://localhost:5000/api/createSubcategory';
+                    const data = {
+                        name: input.value,
+                    };
+
+                    const options = {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(data)
+                    };
+
+                    fetch(url, options)
+                        .then(response => response.json())
+                        .then(data => {
+                            console.log('Success:', data);
+                            document.getElementById('AttributeInput').value = "";
+                            const apiUrl = 'http://localhost:5000/api/getAllsubcategories';
+                            fetch(apiUrl)
+                                .then(response => response.json())
+                                .then(data => {
+                                    rightContainer.innerHTML = '<div class="AttributesLeft"><h4 id="category">Categories</h4><h4 id="subcategory">Subcategories</h4><h4 id="Brands">Brands</h4><h4>Sizes</h4></div>   <div class="AttributesRight"><div class="addNewCategory"><div> <h4>Add new subcategory</h4> <input id ="AttributeInput" type="text"></div><div><button id="subcategoryAddBtn">Add</button>  </div></div><h3>Available subcategories</h3><div class="existingCategories"></div>';
+                                    const existingCategories = document.querySelector('.existingCategories');
+                                    data.forEach(category => {
+                                        const categoryItem = document.createElement('div');
+                                        categoryItem.classList.add('categoryItem');
+                                        const categoryName = document.createElement('h4');
+                                        categoryName.innerText = category.SubcategoryName;
+                                        const deleteIcon = document.createElement('img');
+                                        deleteIcon.src = 'dustbin.png';
+                                        deleteIcon.alt = 'Delete';
+                                        deleteIcon.setAttribute('id', category._id);
+                                        deleteIcon.classList.add('subcategoryDustbinIcon'); // Add dustbinIcon class
+                                        deleteIcon.setAttribute('data-id', category._id); // Set data-id attribute
+                                        categoryItem.appendChild(categoryName);
+                                        categoryItem.appendChild(deleteIcon);
+                                        existingCategories.appendChild(categoryItem);
+
+
+                                    });
+                                })
+                                .catch(error => {
+                                    console.error('Error fetching data:', error);
+                                });
+                        })
+                        .catch(error => {
+                            console.error('Error:', error);
+                        });
+                }
+
+
+            })
+
+            // BrandAddBtn onclick Listener
+
+            document.addEventListener('click', () => {
+
+                if (event.target.id === 'addBrandBtn') {
+                    const input = document.querySelector('#AttributeInput');
+                    const url = 'http://localhost:5000/api/createBrand';
+                    const data = {
+                        name: input.value,
+                    };
+
+                    const options = {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(data)
+                    };
+
+                    fetch(url, options)
+                        .then(response => response.json())
+                        .then(data => {
+                            console.log('Success:', data);
+                            document.getElementById('AttributeInput').value = "";
+                            const apiUrl = 'http://localhost:5000/api/getAllBrands';
+                            fetch(apiUrl)
+                                .then(response => response.json())
+                                .then(data => {
+                                    rightContainer.innerHTML = '<div class="AttributesLeft"><h4 id="category">Categories</h4><h4 id="subcategory">Subcategories</h4><h4 id="brand">Brands</h4><h4>Sizes</h4></div>   <div class="AttributesRight"><div class="addNewCategory"><div> <h4>Add new Brand</h4> <input id ="AttributeInput" type="text"></div><div><button id="addBrandBtn">Add</button>  </div></div><h3>Available Brands</h3><div class="existingCategories"></div>';
+                                    const existingCategories = document.querySelector('.existingCategories');
+                                    data.forEach(category => {
+                                        const categoryItem = document.createElement('div');
+                                        categoryItem.classList.add('categoryItem');
+                                        const categoryName = document.createElement('h4');
+                                        categoryName.innerText = category.brandName;
+                                        const deleteIcon = document.createElement('img');
+                                        deleteIcon.src = 'dustbin.png';
+                                        deleteIcon.alt = 'Delete';
+                                        deleteIcon.setAttribute('id', category._id);
+                                        deleteIcon.classList.add('brandDustbinIcon'); // Add dustbinIcon class
+                                        deleteIcon.setAttribute('data-id', category._id); // Set data-id attribute
+                                        categoryItem.appendChild(categoryName);
+                                        categoryItem.appendChild(deleteIcon);
+                                        existingCategories.appendChild(categoryItem);
+
+
+                                    });
+                                })
+                                .catch(error => {
+                                    console.error('Error fetching data:', error);
+                                });
+                        })
+                        .catch(error => {
+                            console.error('Error:', error);
+                        });
+                }
+
+
+            });
+
+            //add Size Button On click
+
+            document.addEventListener('click', () => {
+
+                if (event.target.id === 'addSizeBtn') {
+                    const input = document.querySelector('#AttributeInput');
+                    const url = 'http://localhost:5000/api/createSize';
+                    const data = {
+                        name: input.value,
+                    };
+
+                    const options = {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(data)
+                    };
+
+                    fetch(url, options)
+                        .then(response => response.json())
+                        .then(data => {
+                            console.log('Success:', data);
+                            document.getElementById('AttributeInput').value = "";
+                            const apiUrl = 'http://localhost:5000/api/getAllSizes';
+                            fetch(apiUrl)
+                                .then(response => response.json())
+                                .then(data => {
+                                    rightContainer.innerHTML = '<div class="AttributesLeft"><h4 id="category">Categories</h4><h4 id="subcategory">Subcategories</h4><h4 id="brand">Brands</h4><h4 id="sizes">Sizes</h4></div>   <div class="AttributesRight"><div class="addNewCategory"><div> <h4>Add new size</h4> <input id ="AttributeInput" type="text"></div><div><button id="addSizeBtn">Add</button>  </div></div><h3>Available sizes</h3><div class="existingCategories"></div>';
+                                    const existingCategories = document.querySelector('.existingCategories');
+                                    data.forEach(category => {
+                                        const categoryItem = document.createElement('div');
+                                        categoryItem.classList.add('categoryItem');
+                                        const categoryName = document.createElement('h4');
+                                        categoryName.innerText = category.size;
+                                        const deleteIcon = document.createElement('img');
+                                        deleteIcon.src = 'dustbin.png';
+                                        deleteIcon.alt = 'Delete';
+                                        deleteIcon.setAttribute('id', category._id);
+                                        deleteIcon.classList.add('sizeDustbinIcon'); // Add dustbinIcon class
+                                        deleteIcon.setAttribute('data-id', category._id); // Set data-id attribute
+                                        categoryItem.appendChild(categoryName);
+                                        categoryItem.appendChild(deleteIcon);
+                                        existingCategories.appendChild(categoryItem);
+
+
+                                    });
+                                })
+                                .catch(error => {
+                                    console.error('Error fetching data:', error);
+                                });
+                        })
+                        .catch(error => {
+                            console.error('Error:', error);
+                        });
+                }
+
+            })
+
+            //CategoryDustbinIcon On Click Listener
+            document.addEventListener('click', (event) => {
+                if (event.target.matches('.CategoryDustbinIcon')) {
+                    const url = 'http://localhost:5000/api/deleteCategory';
+                    const categoryId = event.target.getAttribute('id');
+                    console.log(categoryId);// Use data-id attribute
+
+                    const data = {
+                        _id: categoryId,
+                    };
+
+                    const options = {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify(data),
+                    };
+
+                    fetch(url, options)
+                        .then(response => response.json())
+                        .then(data => {
+                            console.log('Success:', data);
+                            fetch(url, options)
+                                .then(response => response.json())
+                                .then(data => {
+                                    console.log('Success:', data);
+                                    document.getElementById('AttributeInput').value = "";
+                                    const apiUrl = 'http://localhost:5000/api/getAllCategories';
+                                    fetch(apiUrl)
+                                        .then(response => response.json())
+                                        .then(data => {
+                                            rightContainer.innerHTML = '<div class="AttributesLeft"><h4 id="category">Categories</h4><h4 id="subcategory">Subcategories</h4><h4 id="Brands">Brands</h4><h4>Sizes</h4></div>   <div class="AttributesRight"><div class="addNewCategory"><div> <h4>Add new category</h4> <input id ="AttributeInput" type="text"></div><div><button id="categoryAddBtn">Add</button>  </div></div><h3>Available Categories</h3><div class="existingCategories"></div>';
+                                            const existingCategories = document.querySelector('.existingCategories');
+                                            data.forEach(category => {
+                                                const categoryItem = document.createElement('div');
+                                                categoryItem.classList.add('categoryItem');
+                                                const categoryName = document.createElement('h4');
+                                                categoryName.innerText = category.categoryName;
+                                                const deleteIcon = document.createElement('img');
+                                                deleteIcon.src = 'dustbin.png';
+                                                deleteIcon.alt = 'Delete';
+                                                deleteIcon.classList.add('dustbinIcon'); // Add dustbinIcon class
+                                                deleteIcon.setAttribute('data-id', category._id); // Set data-id attribute
+                                                categoryItem.appendChild(categoryName);
+                                                categoryItem.appendChild(deleteIcon);
+                                                existingCategories.appendChild(categoryItem);
+                                            });
+                                        })
+                                        .catch(error => {
+                                            console.error('Error fetching data:', error);
+                                        });
+                                })
+                                .catch(error => {
+                                    console.error('Error:', error);
+                                });
+                        })
+                        .catch(error => {
+                            console.error('Error:', error);
+                        });
+                }
+
+
+            });
+
+            //subCategoryDustbinIcon On Click Listener
+            document.addEventListener('click', (event) => {
+                if (event.target.matches('.subcategoryDustbinIcon')) {
+                    const url = 'http://localhost:5000/api/deleteSubcategory';
+                    const categoryId = event.target.getAttribute('id');
+                    console.log(categoryId);// Use data-id attribute
+
+                    const data = {
+                        _id: categoryId,
+                    };
+
+                    const options = {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify(data),
+                    };
+
+                    fetch(url, options)
+                        .then(response => response.json())
+                        .then(data => {
+                            console.log('Success:', data);
+                            fetch(url, options)
+                                .then(response => response.json())
+                                .then(data => {
+                                    console.log('Success:', data);
+                                    document.getElementById('AttributeInput').value = "";
+                                    const apiUrl = 'http://localhost:5000/api/getAllSubcategories';
+                                    fetch(apiUrl)
+                                        .then(response => response.json())
+                                        .then(data => {
+                                            rightContainer.innerHTML = '<div class="AttributesLeft"><h4 id="category">Categories</h4><h4 id="subcategory">Subcategories</h4><h4 id="Brands">Brands</h4><h4>Sizes</h4></div>   <div class="AttributesRight"><div class="addNewCategory"><div> <h4>Add new subcategory</h4> <input id ="AttributeInput" type="text"></div><div><button id="subcategoryAddBtn">Add</button>  </div></div><h3>Available subcategories</h3><div class="existingCategories"></div>';
+                                            const existingCategories = document.querySelector('.existingCategories');
+                                            data.forEach(category => {
+                                                const categoryItem = document.createElement('div');
+                                                categoryItem.classList.add('categoryItem');
+                                                const categoryName = document.createElement('h4');
+                                                categoryName.innerText = category.categoryName;
+                                                const deleteIcon = document.createElement('img');
+                                                deleteIcon.src = 'dustbin.png';
+                                                deleteIcon.alt = 'Delete';
+                                                deleteIcon.classList.add('subcategoryDustbinIcon'); // Add dustbinIcon class
+                                                deleteIcon.setAttribute('data-id', category._id); // Set data-id attribute
+                                                categoryItem.appendChild(categoryName);
+                                                categoryItem.appendChild(deleteIcon);
+                                                existingCategories.appendChild(categoryItem);
+                                            });
+                                        })
+                                        .catch(error => {
+                                            console.error('Error fetching data:', error);
+                                        });
+                                })
+                                .catch(error => {
+                                    console.error('Error:', error);
+                                });
+                        })
+                        .catch(error => {
+                            console.error('Error:', error);
+                        });
+                }
+
+
+            });
+
+            //brandDustbin On Click Listener
+            document.addEventListener('click', (event) => {
+                if (event.target.matches('.brandDustbinIcon')) {
+                    const url = 'http://localhost:5000/api/deleteBrand';
+                    const categoryId = event.target.getAttribute('id');
+                    console.log(categoryId);// Use data-id attribute
+
+                    const data = {
+                        _id: categoryId,
+                    };
+
+                    const options = {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify(data),
+                    };
+
+                    fetch(url, options)
+                        .then(response => response.json())
+                        .then(data => {
+                            console.log('Success:', data);
+                            fetch(url, options)
+                                .then(response => response.json())
+                                .then(data => {
+                                    console.log('Success:', data);
+                                    document.getElementById('AttributeInput').value = "";
+                                    const apiUrl = 'http://localhost:5000/api/getAllBrands';
+                                    fetch(apiUrl)
+                                        .then(response => response.json())
+                                        .then(data => {
+                                            rightContainer.innerHTML = '<div class="AttributesLeft"><h4 id="category">Categories</h4><h4 id="subcategory">Subcategories</h4><h4 id="Brands">Brands</h4><h4>Sizes</h4></div>   <div class="AttributesRight"><div class="addNewCategory"><div> <h4>Add new Brand</h4> <input id ="AttributeInput" type="text"></div><div><button id="addBrandBtn">Add</button>  </div></div><h3>Available Brands</h3><div class="existingCategories"></div>';
+                                            const existingCategories = document.querySelector('.existingCategories');
+                                            data.forEach(category => {
+                                                const categoryItem = document.createElement('div');
+                                                categoryItem.classList.add('categoryItem');
+                                                const categoryName = document.createElement('h4');
+                                                categoryName.innerText = category.brandName;
+                                                const deleteIcon = document.createElement('img');
+                                                deleteIcon.src = 'dustbin.png';
+                                                deleteIcon.alt = 'Delete';
+                                                deleteIcon.classList.add('brandDustbinIcon'); // Add dustbinIcon class
+                                                deleteIcon.setAttribute('data-id', category._id); // Set data-id attribute
+                                                categoryItem.appendChild(categoryName);
+                                                categoryItem.appendChild(deleteIcon);
+                                                existingCategories.appendChild(categoryItem);
+                                            });
+                                        })
+                                        .catch(error => {
+                                            console.error('Error fetching data:', error);
+                                        });
+                                })
+                                .catch(error => {
+                                    console.error('Error:', error);
+                                });
+                        })
+                        .catch(error => {
+                            console.error('Error:', error);
+                        });
+                }
+
+
+            });
+
+
+            //size Dustbin onclick
+            document.addEventListener('click', (event) => {
+                if (event.target.matches('.sizeDustbinIcon')) {
+                    const url = 'http://localhost:5000/api/deleteSize';
+                    const categoryId = event.target.getAttribute('id');
+                    console.log(categoryId);// Use data-id attribute
+
+                    const data = {
+                        _id: categoryId,
+                    };
+
+                    const options = {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify(data),
+                    };
+
+                    fetch(url, options)
+                        .then(response => response.json())
+                        .then(data => {
+                            console.log('Success:', data);
+                            fetch(url, options)
+                                .then(response => response.json())
+                                .then(data => {
+                                    console.log('Success:', data);
+                                    document.getElementById('AttributeInput').value = "";
+                                    const apiUrl = 'http://localhost:5000/api/getAllSizes';
+                                    fetch(apiUrl)
+                                        .then(response => response.json())
+                                        .then(data => {
+                                            rightContainer.innerHTML = '<div class="AttributesLeft"><h4 id="category">Categories</h4><h4 id="subcategory">Subcategories</h4><h4 id="brand">Brands</h4><h4 id="sizes">Sizes</h4></div><div class="AttributesRight"><div class="addNewCategory"><div> <h4>Add new size</h4> <input id ="AttributeInput" type="text"></div><div><button id="addSizeBtn">Add</button>  </div></div><h3>Available Sizes</h3><div class="existingCategories"></div>';
+                                            const existingCategories = document.querySelector('.existingCategories');
+                                            data.forEach(category => {
+                                                const categoryItem = document.createElement('div');
+                                                categoryItem.classList.add('categoryItem');
+                                                const categoryName = document.createElement('h4');
+                                                categoryName.innerText = category.size;
+                                                const deleteIcon = document.createElement('img');
+                                                deleteIcon.src = 'dustbin.png';
+                                                deleteIcon.alt = 'Delete';
+                                                deleteIcon.classList.add('sizeDustbinIcon'); // Add dustbinIcon class
+                                                deleteIcon.setAttribute('data-id', category._id); // Set data-id attribute
+                                                categoryItem.appendChild(categoryName);
+                                                categoryItem.appendChild(deleteIcon);
+                                                existingCategories.appendChild(categoryItem);
+                                            });
+                                        })
+                                        .catch(error => {
+                                            console.error('Error fetching data:', error);
+                                        });
+                                })
+                                .catch(error => {
+                                    console.error('Error:', error);
+                                });
+                        })
+                        .catch(error => {
+                            console.error('Error:', error);
+                        });
+                }
+
+
+            });
+
+
+            // Category Onclick Listener
+            document.addEventListener('click', (event) => {
+                if (event.target.id === 'category') {
+                    const rightContainer = document.querySelector('.rightContainer');
+                    const apiUrl = 'http://localhost:5000/api/getAllCategories';
+
+
+
+                    fetch(apiUrl)
+                        .then(response => response.json())
+                        .then(data => {
+                            rightContainer.innerHTML = '<div class="AttributesLeft"><h4 id="category">Categories</h4><h4 id="subcategory">Subcategories</h4><h4 id="brand">Brands</h4><h4>Sizes</h4></div>   <div class="AttributesRight"><div class="addNewCategory"><div> <h4>Add new category</h4> <input id ="AttributeInput" type="text"></div><div><button id="categoryAddBtn">Add</button>  </div></div><h3>Available Categories</h3><div class="existingCategories"></div>';
+                            const existingCategories = document.querySelector('.existingCategories');
+                            data.forEach(category => {
+                                const categoryItem = document.createElement('div');
+                                categoryItem.classList.add('categoryItem');
+                                const categoryName = document.createElement('h4');
+                                categoryName.innerText = category.categoryName;
+                                categoryName.setAttribute('id', category._id);
+                                const deleteIcon = document.createElement('img');
+                                deleteIcon.src = 'dustbin.png';
+                                deleteIcon.alt = 'Delete';
+                                deleteIcon.classList.add('CategoryDustbinIcon'); // Add dustbinIcon class
+                                deleteIcon.setAttribute('id', category._id); // Set data-id attribute
+                                categoryItem.appendChild(categoryName);
+                                categoryItem.appendChild(deleteIcon);
+                                existingCategories.appendChild(categoryItem);
+                            });
+
+                            const leftContainer = document.querySelector('.AttributesLeft');
+                            const selectBtn = leftContainer.querySelector('h4');
+                            selectBtn.style.background = '#232D3D';
+                        })
+                        .catch(error => {
+                            console.error('Error fetching data:', error);
+                        });
+                }
+            });
+        });
+
+        //subcategory On clickListners
+        document.addEventListener('click', (event) => {
+            if (event.target.id === 'subcategory') {
+                const rightContainer = document.querySelector('.rightContainer');
+                const apiUrl = 'http://localhost:5000/api/getAllSubCategories';
+
+
+
+                fetch(apiUrl)
+                    .then(response => response.json())
+                    .then(data => {
+                        rightContainer.innerHTML = '<div class="AttributesLeft"><h4 id="category">Categories</h4><h4 id="subcategory">Subcategories</h4><h4 id="brand">Brands</h4><h4>Sizes</h4></div>   <div class="AttributesRight"><div class="addNewCategory"><div> <h4>Add new Subcategory</h4> <input id ="AttributeInput" type="text"></div><div><button id="subcategoryAddBtn">Add</button>  </div></div><h3>Available Subcategories</h3><div class="existingCategories"></div>';
+                        const existingCategories = document.querySelector('.existingCategories');
+                        data.forEach(category => {
+                            const categoryItem = document.createElement('div');
+                            categoryItem.classList.add('categoryItem');
+                            const categoryName = document.createElement('h4');
+                            categoryName.innerText = category.SubcategoryName;
+                            categoryName.setAttribute('id', category._id);
+                            const deleteIcon = document.createElement('img');
+                            deleteIcon.src = 'dustbin.png';
+                            deleteIcon.alt = 'Delete';
+                            deleteIcon.classList.add('subcategoryDustbinIcon'); // Add dustbinIcon class
+                            deleteIcon.setAttribute('id', category._id); // Set data-id attribute
+                            categoryItem.appendChild(categoryName);
+                            categoryItem.appendChild(deleteIcon);
+                            existingCategories.appendChild(categoryItem);
+                        });
+
+                        //button color change
+                        const leftContainer = document.querySelector('.AttributesLeft');
+                        const selectBtn = leftContainer.querySelector('#subcategory');
+                        selectBtn.style.background = '#232D3D';
+                    })
+                    .catch(error => {
+                        console.error('Error fetching data:', error);
+                    });
+            }
+        });
+
+
+        // Add an event listener for the Brand button
+        document.addEventListener('click', (event) => {
+            if (event.target.id === 'brand') {
+                const rightContainer = document.querySelector('.rightContainer');
+                const apiUrl = 'http://localhost:5000/api/getAllBrands';
+
+
+                fetch(apiUrl)
+                    .then(response => response.json())
+                    .then(data => {
+                        rightContainer.innerHTML = '<div class="AttributesLeft"><h4 id="category">Categories</h4><h4 id="subcategory">Subcategories</h4><h4 id="brand">Brands</h4><h4>Sizes</h4></div>   <div class="AttributesRight"><div class="addNewCategory"><div> <h4>Add new Brand</h4> <input id ="AttributeInput" type="text"></div><div><button id="addBrandBtn">Add</button></div></div><h3>Available Brand</h3><div class="existingCategories"></div>';
+                        const existingCategories = document.querySelector('.existingCategories');
+                        data.forEach(category => {
+                            const categoryItem = document.createElement('div');
+                            categoryItem.classList.add('categoryItem');
+                            const categoryName = document.createElement('h4');
+                            categoryName.innerText = category.brandName;
+                            categoryName.setAttribute('id', category._id);
+                            const deleteIcon = document.createElement('img');
+                            deleteIcon.src = 'dustbin.png';
+                            deleteIcon.alt = 'Delete';
+                            deleteIcon.classList.add('brandDustbinIcon'); // Add dustbinIcon class
+                            deleteIcon.setAttribute('id', category._id); // Set data-id attribute
+                            categoryItem.appendChild(categoryName);
+                            categoryItem.appendChild(deleteIcon);
+                            existingCategories.appendChild(categoryItem);
+                        });
+
+                        //button color change
+                        const leftContainer = document.querySelector('.AttributesLeft');
+                        const selectBtn = leftContainer.querySelector('#brand');
+                        selectBtn.style.background = '#232D3D';
+
+                    })
+                    .catch(error => {
+                        console.error('Error fetching data:', error);
+                    });
+
+
+            }
+        });
+
+        //subcategory On clickListners
+        document.addEventListener('click', (event) => {
+            if (event.target.id === 'subcategory') {
+                const rightContainer = document.querySelector('.rightContainer');
+                const apiUrl = 'http://localhost:5000/api/getAllSubCategories';
+
+
+
+                fetch(apiUrl)
+                    .then(response => response.json())
+                    .then(data => {
+                        rightContainer.innerHTML = '<div class="AttributesLeft"><h4 id="category">Categories</h4><h4 id="subcategory">Subcategories</h4><h4 id="brand">Brands</h4><h4>Sizes</h4></div>   <div class="AttributesRight"><div class="addNewCategory"><div> <h4>Add new Subcategory</h4> <input id ="AttributeInput" type="text"></div><div><button id="subcategoryAddBtn">Add</button>  </div></div><h3>Available Subcategories</h3><div class="existingCategories"></div>';
+                        const existingCategories = document.querySelector('.existingCategories');
+                        data.forEach(category => {
+                            const categoryItem = document.createElement('div');
+                            categoryItem.classList.add('categoryItem');
+                            const categoryName = document.createElement('h4');
+                            categoryName.innerText = category.SubcategoryName;
+                            categoryName.setAttribute('id', category._id);
+                            const deleteIcon = document.createElement('img');
+                            deleteIcon.src = 'dustbin.png';
+                            deleteIcon.alt = 'Delete';
+                            deleteIcon.classList.add('subcategoryDustbinIcon'); // Add dustbinIcon class
+                            deleteIcon.setAttribute('id', category._id); // Set data-id attribute
+                            categoryItem.appendChild(categoryName);
+                            categoryItem.appendChild(deleteIcon);
+                            existingCategories.appendChild(categoryItem);
+                        });
+
+                        //button color change
+                        const leftContainer = document.querySelector('.AttributesLeft');
+                        const selectBtn = leftContainer.querySelector('#subcategory');
+                        selectBtn.style.background = '#232D3D';
+                    })
+                    .catch(error => {
+                        console.error('Error fetching data:', error);
+                    });
+            }
+        });
+
+
+        // On click listener on size 
+        document.addEventListener('click', (event) => {
+            if (event.target.id === 'sizes') {
+
+                const rightContainer = document.querySelector('.rightContainer');
+                const apiUrl = 'http://localhost:5000/api/getAllSizes';
+
+                //button color change
+                const leftContainer = document.querySelector('.AttributesLeft');
+                const selectBtn = leftContainer.querySelector('#sizes');
+                selectBtn.style.background = '#232D3D';
+
+
+                fetch(apiUrl)
+                    .then(response => response.json())
+                    .then(data => {
+                        rightContainer.innerHTML = '<div class="AttributesLeft"><h4 id="category">Categories</h4><h4 id="subcategory">Subcategories</h4><h4 id="brand">Brands</h4><h4 id="sizes">Sizes</h4></div>   <div class="AttributesRight"><div class="addNewCategory"><div> <h4>Add new size</h4> <input id ="AttributeInput" type="text"></div><div><button id="addSizeBtn">Add</button></div></div><h3>Available sizes</h3><div class="existingCategories"></div>';
+                        const existingCategories = document.querySelector('.existingCategories');
+                        data.forEach(category => {
+                            const categoryItem = document.createElement('div');
+                            categoryItem.classList.add('categoryItem');
+                            const categoryName = document.createElement('h4');
+                            categoryName.innerText = category.size;
+                            categoryName.setAttribute('id', category._id);
+                            const deleteIcon = document.createElement('img');
+                            deleteIcon.src = 'dustbin.png';
+                            deleteIcon.alt = 'Delete';
+                            deleteIcon.classList.add('sizeDustbinIcon'); // Add dustbinIcon class
+                            deleteIcon.setAttribute('id', category._id); // Set data-id attribute
+                            categoryItem.appendChild(categoryName);
+                            categoryItem.appendChild(deleteIcon);
+                            existingCategories.appendChild(categoryItem);
+                        });
+
+
+
+                    })
+                    .catch(error => {
+                        console.error('Error fetching data:', error);
+                    });
+            }
+        });
+
+
+    </script>
+
+</body>
+
+</html>
